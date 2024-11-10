@@ -1,0 +1,27 @@
+{
+  "name": "vue3_learn_v2",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "animate.css": "^4.1.1",
+    "axios": "^1.7.7",
+    "gsap": "^3.12.5",
+    "lodash": "^4.17.21",
+    "sass": "^1.78.0",
+    "vue": "^3.5.12",
+    "vue-router": "^4.4.5",
+    "vuex": "^4.1.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.1.4",
+    "typescript": "~5.6.2",
+    "vite": "^5.4.10",
+    "vue-tsc": "^2.1.8"
+  }
+}
