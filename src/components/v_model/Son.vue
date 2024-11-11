@@ -17,7 +17,7 @@
 
 <script lang="ts" setup>
 // 使用setup语法糖
-import { defineProps, defineEmits, ref } from 'vue';
+import { ref } from 'vue';
 // 等价于原选项式API，props
 const props = defineProps({
   list: {
@@ -58,6 +58,13 @@ const num = ref(0);
 // const emits = defineEmits(['xay']);
 const emits = defineEmits(['update:list', 'toFatInc', 'toFatDec']);
 // console.log(emits);
+
+/**
+ * @desc:文本框中，按下enter键
+ * 键盘抬起事件-按enter按钮生效
+ * @keyup.enter="handleChange"
+ *
+ * */
 const handleChange = () => {
   const arr = props.list;
   // 新添加的数据，放在数组元素最前面，unshift方法（unshift 含义：数组头部插入）

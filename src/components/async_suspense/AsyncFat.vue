@@ -14,7 +14,7 @@
     </Suspense>
   </template>
 </template>
-<script>
+<script lang="ts">
 /**
  *
  * Suspense组件

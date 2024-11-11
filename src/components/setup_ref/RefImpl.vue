@@ -19,19 +19,37 @@
     <button @click="MyChangeSkill">点击按钮，改变rea对象的skills键的值</button>
   </div>
 </template>
-<script>
-import { ref, watch, reactive } from 'vue';
+<script lang="ts">
+import {ref, watch, reactive} from 'vue';
+
 /**
  *
+ * @desc:ref和reactive对象，在watch中监听时，不同情况下被监听对象的写法
  * 参考文档：vue3Watch监听RefImpl对象的说明
  * 文档链接：https://blog.csdn.net/moxunjinmu/article/details/123320567
+ * 1.watch监听simpleRef ref(简单类型)，直接将对象本身作为监听对象，不带.value，否则报错
+ * 注：watch的监听对象只能为getter/setter ref reactive对象和数组（前面几种数据源构成的数组，这是watch监听多个数据源的情形），
+ * 不能是简单类型
+ *
+ * 2.watch监听comRef ref(复杂类型{})
+ * 注：两种处理方式：
+ * 2.1 将comRef直接作为监听对象，此时watch需要配置为{deep:true}，否则watch监听的回调内代码不会执行
+ * 2.2 将res.value作为监听对象，因为ref({})对象时，vue3内部会调用reactive方法，将proxy对象挂载在RefImpl对象的value属性上
+ *
+ * 3.watch监听rea reactive({})，直接将对象本身作为监听对象
+ *
+ * 4.watch监听 rea reactive({a:'',b:''}) reactive对象的单个属性,需要使用函数形式监听
+ * watch(()=>rea.a, (newVal, oldVal)=>{
+ *  // todo
+ * })
+ *
+ *
  *
  */
 export default {
   name: 'RefImpl',
   setup() {
     let sum = ref(0);
-    let msg = ref('你好啊');
     // 注意：对象在Vue3中，一般使用reactive来定义；当使用ref来包括对象时，对象仍然能够深度响应式；RefImpl把代理对象Proxy挂在自己的value属性上
     // 对比：ref和reactive定义对象后，在watch监听时的区别
     let res = ref({
@@ -47,7 +65,8 @@ export default {
     });
     // a.sum本身就是一个RefImpl，直接作为北watch监听的对象;而sum.value是一个具体值，不能作为watch的监听对象
     /*
-    注意：如果监听了sum.value,不能打印sum值的；而且会弹出警告：watch监控数据源只能是：getter/setter函数，ref,reactive对象，或者数组；
+    注意：如果监听了sum.value,不能打印sum值的；而且会弹出警告：watch监控数据源只能是：getter/setter函数，ref,reactive对象，或者前面
+    几种数据源构成的数组（watch监听多个数据源时）
     不包括 数值型 
     [Vue warn]: Invalid watch source:  0 A watch source can only be a getter/effect function,
      a ref, a reactive object, or an array of these types. 
@@ -65,11 +84,11 @@ export default {
     // });
     // b.ref中传入对象；仍然将ref对象本身作为被监听变量;不佳深度监听，watch的处理函数不执行
     watch(
-      res,
-      (newVal, oldVal) => {
-        console.log(res.value, newVal.skills, oldVal.skills);
-      },
-      { deep: true }
+        res,
+        (newVal, oldVal) => {
+          console.log(res.value, newVal.skills, oldVal.skills);
+        },
+        {deep: true}
     );
     // c.rea本身就是对象传入了reactive，rea本身就可以作为监听对象---在上面[Vue Warn]中可以看到哪些数据能作为警告
     watch(rea, (newVal, oldVal) => {

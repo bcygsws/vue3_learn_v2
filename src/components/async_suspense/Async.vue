@@ -2,7 +2,7 @@
 <template>
   <div>{{ msg }}</div>
 </template>
-<script>
+<script lang="ts">
 /**
  *  @一、Promise的使用和race()、all()方法
  * 参考文档：https://blog.csdn.net/rjlmylover_zyw/article/details/122920303
@@ -151,11 +151,10 @@ const getInfo = async () => {
   //   return;
   // }, 2000);
   console.log(1111);
-  const info = {
+  return {
     name: '蓉蓉',
     age: 18
   };
-  return info;
 };
 export default {
   async setup() {

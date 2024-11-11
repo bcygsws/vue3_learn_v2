@@ -1,4 +1,6 @@
-# 项目 vue3_learn
+# 项目 vue3_learn_v2
+
+## 说明：使用vue3+ts以及vite构建工具，重构项目 vue3_learn
 
 ## 一、创建 vue3 项目的两种方式
 
@@ -19,7 +21,8 @@
 - [参考文档](https://blog.csdn.net/weixin_44647098/article/details/115519309?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-0.pc_relevant_paycolumn_v3&spm=1001.2101.3001.4242.1&utm_relevant_index=3)
   #### create-react-app 的方式，已被抛弃
 - create-vite-app 全局安装，然后 create-vite-app 项目名称
-- 但是注意：全局安装 create-vite-app 时，会提醒这个插件已被抛弃：npm WARN deprecated create-vite-app@1.21.0: create-vite-app has been deprecated. run `npm init @vitejs/app` or `yarn create @vitejs/app` instead.
+- 但是注意：全局安装 create-vite-app 时，会提醒这个插件已被抛弃：npm WARN deprecated create-vite-app@1.21.0:
+  create-vite-app has been deprecated. run `npm init @vitejs/app` or `yarn create @vitejs/app` instead.
 
 #### 运行 npm 命令的方式，npm @vitejs/app，推荐：每次安装，可以使用到最新的特性
 
@@ -79,18 +82,28 @@
 
 ## 三、ref 和 reactive 的一些细节
 
-- 1. ref 和 reactive 是 composition API 的两个响应式 API
-- 2. ref 主要用基本数据类型的响应式，reactive 用于深度的响应式数据
-- 3. ref 也可以处理对象和数组(在 setup 中要多加一个.value,而 reactive 方式不需要.value)，当 ref 中传入对象或数组时，系统内部会用 reactive 来处理它（打印 m3，能看到里面包含代理对象）
-- 4. ref 内部是通过 getter/setter 来实现数据劫持的
-- 5. proxy 内部通过 Proxy 对象拦截传入的属性对象的任何属性的任何操作（多达 13 种操作），通过反射对象 Reflect 来处理 Proxy 拦截的属性的操作
-- 6. ref 在 setup 中处理时，const user=ref('dfaggfa');要添加一个 value(user.value 才能拿到值)，才能拿到值；在模板中处理它时，系统会自动加 value,不用带 value
+-
+    1. ref 和 reactive 是 composition API 的两个响应式 API
+-
+    2. ref 主要用基本数据类型的响应式，reactive 用于深度的响应式数据
+-
+    3. ref 也可以处理对象和数组(在 setup 中要多加一个.value,而 reactive 方式不需要.value)，当 ref 中传入对象或数组时，系统内部会用
+       reactive 来处理它（打印 m3，能看到里面包含代理对象）
+-
+    4. ref 内部是通过 getter/setter 来实现数据劫持的
+-
+    5. proxy 内部通过 Proxy 对象拦截传入的属性对象的任何属性的任何操作（多达 13 种操作），通过反射对象 Reflect 来处理 Proxy
+       拦截的属性的操作
+-
+    6. ref 在 setup 中处理时，const user=ref('dfaggfa');要添加一个 value(user.value 才能拿到值)，才能拿到值；在模板中处理它时，系统会自动加
+       value,不用带 value
 
 ## 四、setup 的一些注意问题
 
 ### setup 的执行时机
 
-- setup 执行发生在 beforeCreate 和 created 之前，因此 setup 不能操作 data,methods,computed 等属性；只能操作 setup 固有的参数 props,attrs,slots,emit,expose 这五个属性
+- setup 执行发生在 beforeCreate 和 created 之前，因此 setup 不能操作 data,methods,computed 等属性；只能操作 setup 固有的参数
+  props,attrs,slots,emit,expose 这五个属性
 - 在 vue3 中 setup 被当做 vue2 中生命周期钩子 beforeCreate 和 created 使用，准确的说是顶替了这两个钩子的使用
 
 ### setup 的参数(props,{attrs,slots,emit,expose})
@@ -100,12 +113,15 @@
 #### 响应式参数 props
 
 - props 参数是响应式的，不能随便其进行解构，解构会丢失其响应式
-- 强行解构它，用到另外一个对象，toRefs。toRefs 的作用是在不丢失响应式的前提下，分解响应式对象，这个对象的每一个属性都是一个 ref;我们知道 ref 也是响应式的-处理基本数据类型的响应式数据
-- 强制解构举例：const user=reactive({name:\'\',age:\'\'}); const {name,age}=toRefs(user); name 和 age 就是两个 ref 了，在 setup 中操作数据，需要按照 ref 的用法，name.value,age.value 来进行读写操作
+- 强行解构它，用到另外一个对象，toRefs。toRefs 的作用是在不丢失响应式的前提下，分解响应式对象，这个对象的每一个属性都是一个
+  ref;我们知道 ref 也是响应式的-处理基本数据类型的响应式数据
+- 强制解构举例：const user=reactive({name:\'\',age:\'\'}); const {name,age}=toRefs(user); name 和 age 就是两个 ref 了，在
+  setup 中操作数据，需要按照 ref 的用法，name.value,age.value 来进行读写操作
 
 #### 有状态参数 attrs 和 slots
 
-- 打印这两个对象，看到是 Prox 代理对象，它们是有状态的；会随着组件自身的更新而更新；因此要避免对它们解构，使用 attrs.x,slots.x 获取响应属性。context 上下文对象是一个普通的 js 对象，是非响应式的可以对其解构，解构成了{attrs,slots,emit}
+- 打印这两个对象，看到是 Prox 代理对象，它们是有状态的；会随着组件自身的更新而更新；因此要避免对它们解构，使用
+  attrs.x,slots.x 获取响应属性。context 上下文对象是一个普通的 js 对象，是非响应式的可以对其解构，解构成了{attrs,slots,emit}
 - attrs 和 slots 是非响应式的，如果打算根据 attrs 和 slots 更改应用副作用，需要在生命周期钩子 onUpdated 中操作
 
 #### 常用参数 emits，用来分发事件的
@@ -132,14 +148,16 @@
 
 ### 监听或者叫侦听属性 watch 和 watchEffect
 
-- 1.watch 监听的是原因对象，而非结果对象，比如：要拿到一个 fullName,要根据 user 中的 firstName 和 lastName 作拼接；那么，user 要作为参数放在 watch 的第一个参数中，而要监听的结果对象是 fullName
+- 1.watch 监听的是原因对象，而非结果对象，比如：要拿到一个 fullName,要根据 user 中的 firstName 和 lastName 作拼接；那么，user
+  要作为参数放在 watch 的第一个参数中，而要监听的结果对象是 fullName
 - const fullName=ref('');
 - watch(user,(value)=>{
 - let arr=value.split('-'); // 参数 value 里面不用在.value 了，内部已经作了处理
 - fullName.value=arr[0]+"-"+arr[1];
 -
 - })
-- 2.watch 的第三参数声明两个特定属性：{immediate:true,deep:true},immediate 表示初始化时立即执行一次，deep 表示深度监视(不论数据对象的层级有多深)
+- 2.watch 的第三参数声明两个特定属性：{immediate:true,deep:true},immediate 表示初始化时立即执行一次，deep 表示深度监视(
+  不论数据对象的层级有多深)
 - 3.watchEffect 写法更为简洁，不需要指定依赖的监视对象，操作什么响应式对象，就监视谁。而且默认会执行一次
 - const fullName=ref('');
 - watch(()=>{
@@ -148,8 +166,8 @@
 - 4.watch 监视多个数据，必须使用数组，reactive 的属性，要使用函数形式，ref 对象则直接使用
 - const fullName=ref('');
 - const user=reactive({
-  - firstName:'张',
-  - lastName:'无忌'
+    - firstName:'张',
+    - lastName:'无忌'
 -
 - });
 - watch([fullName,()=>user.firstName,()=>user.lastName],(val)=>{
@@ -176,7 +194,8 @@
 ### 3.ref/defineExpose 方式
 
 - 适用于父组件获取子组件的属性或调用子组件的方法
-- setup 语法糖中使用 defineExpose 暴露属性或方法，父组件才能使用。原因：通过 ref 获取的组件实例，不会暴露任何属性在\<script setup\>中，如果需要引用。需要手动导出这些属性或方法，以供父组件使用
+- setup 语法糖中使用 defineExpose 暴露属性或方法，父组件才能使用。原因：通过 ref 获取的组件实例，不会暴露任何属性在\<script
+  setup\>中，如果需要引用。需要手动导出这些属性或方法，以供父组件使用
 - [参考文档 1：Vue3 的七种组件通信方式，别再说不会组件通信了](https://blog.csdn.net/qq_27318177/article/details/122967669)
 
 ### 4.attrs 实现组件通信
@@ -201,11 +220,15 @@
 - state、getters、mutations、actions 方式和原来 vue2 差别不大
 - mapState 等映射对象的方式，需要自己封装一下 components/vuex/hook 文件夹下的封装
 - hooks 中封装代码的基本思路：
-  - 就是自己定义 useState,useGetters,useMutations,useActions，然后使用
-  - useState 返回 return useStateMapper(mapper,mapperFn);mapper 是共享的 state 的属性组成的数据，mapperFn 是 mapState,如果使用了命名空间，需要使用 mapperFn=createNamespacedHelpers(moduleName).mapState;
-  - useMapper.js 中声明 useStateMapper,useActionsMapper 等函数
-- 命名空间：vuex 是单状态树，如果所有的状态都集中到一个对象上，这个对象可能会变得非常臃肿。vue 允许将 store 分成许多模块，每个模块拥有自己的 state,getters,mutations,actions,modules
-- 命名空间中操作默认空间的数据的方式，[参考文档](https://blog.csdn.net/lzb348110175/article/details/89387495?spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_paycolumn_v3&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_paycolumn_v3&utm_relevant_index=1)
+    - 就是自己定义 useState,useGetters,useMutations,useActions，然后使用
+    - useState 返回 return useStateMapper(mapper,mapperFn);mapper 是共享的 state 的属性组成的数据，mapperFn 是
+      mapState,如果使用了命名空间，需要使用 mapperFn=createNamespacedHelpers(moduleName).mapState;
+    - useMapper.js 中声明 useStateMapper,useActionsMapper 等函数
+- 命名空间：vuex 是单状态树，如果所有的状态都集中到一个对象上，这个对象可能会变得非常臃肿。vue 允许将 store 分成许多模块，每个模块拥有自己的
+  state,getters,mutations,actions,modules
+-
+命名空间中操作默认空间的数据的方式，[参考文档](https://blog.csdn.net/lzb348110175/article/details/89387495?spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_paycolumn_v3&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_paycolumn_v3&utm_relevant_index=1)
+
 #### 参数 expose，新增
 
 - expose 用于显式的限制暴露出的公共属性；父组件通过模板引用可以获取子组件中 expose({count})暴露出的那些属性

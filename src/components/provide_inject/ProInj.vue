@@ -35,12 +35,17 @@ import {
 } from 'vue';
 // 引入儿子组件
 import Son from './Son.vue';
+import {colorKey} from "@/types/inject-types.ts";
+
 export default defineComponent({
   name: 'ProInj',
   setup() {
     console.log('1-开始创建组件-setup');
     const color = ref('red');
-    provide('color1', color);
+
+    // provide('color1', color);
+    // 注：为了解决inject接收时的类型丢失，使用vue提供InjectionKey定义provide/inject传递的标识符
+    provide(colorKey, color);
     console.log(isRef(ref({}))); // true
     console.log(isReactive(reactive({}))); // true
     console.log(isReadonly(readonly({}))); // true

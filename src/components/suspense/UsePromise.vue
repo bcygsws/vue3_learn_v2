@@ -15,9 +15,9 @@
 import { defineComponent } from 'vue';
 export default defineComponent({
   name: 'UseSuspense',
-  setup() {
+  async setup() {
     // setup最终返回的是{msg:res.msg}，作为setup的返回值
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, _) => {
       // 相当于3.5后，setup才返回了msg；在此期间，使用Suspense标签内的后备内容模板
       setTimeout(() => {
         resolve({ msg: '我是异步组件的数据' });

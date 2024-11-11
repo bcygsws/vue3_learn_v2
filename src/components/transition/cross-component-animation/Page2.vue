@@ -3,7 +3,7 @@
     <div class="box Page2">page2</div>
   </div>
 </template>
-<script>
+<script lang="ts">
 import { gsap } from 'gsap';
 // import 'animate.css';
 import { ref, onMounted } from 'vue';

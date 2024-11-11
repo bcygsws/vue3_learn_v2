@@ -19,7 +19,7 @@
   >
   <router-view></router-view>
 </template>
-<script>
+<script lang="ts">
 /**
  *
  * @ 技巧：为解决prettier和eslint之间的冲突，在.prettierrc文件中添加trailingComma:'none',去掉末尾那个无意义的逗号

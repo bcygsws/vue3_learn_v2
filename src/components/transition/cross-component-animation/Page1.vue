@@ -3,7 +3,7 @@
     <div class="box Page1">page1</div>
   </div>
 </template>
-<script>
+<script lang="ts">
 /**
  *
  * @ gsap+路由守卫实现，跨组件动画

@@ -1,5 +1,6 @@
-import { createStore } from 'vuex';
+import {createStore} from 'vuex';
 import moduleA from './others';
+
 /**
  *
  * @ vuex中命名空间的使用
@@ -7,44 +8,50 @@ import moduleA from './others';
  *
  *
  */
+export interface IState {
+    count: number;
+    name: string;
+    age: number;
+    sex: string;
+}
 
 export default createStore({
-  state: {
-    count: 0,
-    name: '张衡',
-    age: 13,
-    sex: '男'
-  },
-  getters: {
-    getData(state) {
-      return state.count;
+    state: {
+        count: 0,
+        name: '张衡',
+        age: 13,
+        sex: '男'
     },
-    getName(state) {
-      return state.name;
+    getters: {
+        getData(state: IState) {
+            return state.count;
+        },
+        getName(state: IState) {
+            return state.name;
+        }
+    },
+    mutations: {
+        inc(state: IState, props) {
+            state.count += props.step;
+        },
+        dec(state: IState, props) {
+            state.count -= props.step;
+        },
+        remendName(state: IState, props) {
+            state.name = props;
+        }
+    },
+    actions: {
+        decAction(context, props) {
+            context.commit('dec', props);
+        },
+        // 改名的Actions方法
+        setName(context, props) {
+            context.commit('remendName', props);
+        }
+    },
+    modules: {
+        // 使用了命名空间,导入时名称为moduleA,这就是命名空间的名字
+        moduleA
     }
-  },
-  mutations: {
-    inc(state, props) {
-      state.count += props.step;
-    },
-    dec(state, props) {
-      state.count -= props.step;
-    },
-    remendName(state, props) {
-      state.name = props;
-    }
-  },
-  actions: {
-    decAction(context, props) {
-      context.commit('dec', props);
-    },
-    // 改名的Actions方法
-    setName(context, props) {
-      context.commit('remendName', props);
-    }
-  },
-  modules: {
-    // 使用了命名空间,导入时名称为moduleA,这就是命名空间的名字
-    moduleA
-  }
 });

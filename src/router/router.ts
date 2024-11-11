@@ -3,44 +3,44 @@
  *
  * */
 import {createRouter, createWebHistory} from 'vue-router';
-import Home from '../views/Home.vue';
-import Learn from '../components/setup_ref/Learn.vue';
-import Update from '../components/update/Update.vue';
-import Fat from '../components/setup/Fat.vue';
+import Home from '@/views/Home.vue';
+import Learn from '@/components/setup_ref/Learn.vue';
+import Update from '@/components/update/Update.vue';
+import Fat from '@/components/setup/Fat.vue';
 // 计算属性和监听
-import Computed from '../components/computed/Computed.vue';
+import Computed from '@/components/computed/Computed.vue';
 // 自定义hook
-import DefineHook from '../components/hook/DefineHook.vue';
-import FatLife from '../components/life/FatLife.vue';
-import Base from '../components/to_refs/Base.vue';
-import VersionReactive from '../components/reactive/VersionReactive.vue';
-import ShallowReactive from '../components/shallow_reactive/ShallowReactive.vue';
+import DefineHook from '@/components/hook/DefineHook.vue';
+import FatLife from '@/components/life/FatLife.vue';
+import Base from '@/components/to_refs/Base.vue';
+import VersionReactive from '@/components/reactive/VersionReactive.vue';
+import ShallowReactive from '@/components/shallow_reactive/ShallowReactive.vue';
 // 只读和浅只读
-import ReadOnlyProperty from '../components/readonly/ReadOnlyProperty.vue';
-import ToAndMarkRaw from '../components/raw/ToAndMarkRaw.vue';
-import ToRef from '../components/to_ref/ToRef.vue';
-import CustomRef from '../components/custom_ref/CustomRef.vue';
-import Sus from '../components/suspense/Sus.vue';
-import Father from '../components/v_model/Father.vue';
-import ProInj from '../components/provide_inject/ProInj.vue';
-import MyFat from '../components/refs_comu/MyFat.vue';
-import VuexFat from '../components/vuex/VuexFat.vue';
-import AttrsFat from '../components/attrs/AttrsFat.vue';
-import Transition from '../components/transition/Transition.vue';
-import DefineClass from '../components/transition/DefineClass.vue';
-import TransitionLife from '../components/transition/TransitionLife.vue';
-import SomeWay from '../components/transition/SomeWay.vue';
-import UsingGSAP from '../components/transition/UsingGSAP.vue';
-import UsingAnimate from '../components/transition/UsingAnimate.vue';
-import TransitionGroup from '../components/transition/TransitionGroup.vue';
-import RandomNum from '../components/transition/RandomNum.vue';
-import GSAPWatch from '../components/transition/GSAPWatch.vue';
-import AsyncFat from '../components/async_suspense/AsyncFat.vue';
+import ReadOnlyProperty from '@/components/readonly/ReadOnlyProperty.vue';
+import ToAndMarkRaw from '@/components/raw/ToAndMarkRaw.vue';
+import ToRef from '@/components/to_ref/ToRef.vue';
+import CustomRef from '@/components/custom_ref/CustomRef.vue';
+import Sus from '@/components/suspense/Sus.vue';
+import Father from '@/components/v_model/Father.vue';
+import ProInj from '@/components/provide_inject/ProInj.vue';
+import MyFat from '@/components/refs_comu/MyFat.vue';
+import VuexFat from '@/components/vuex/VuexFat.vue';
+import AttrsFat from '@/components/attrs/AttrsFat.vue';
+import Transition from '@/components/transition/Transition.vue';
+import DefineClass from '@/components/transition/DefineClass.vue';
+import TransitionLife from '@/components/transition/TransitionLife.vue';
+import SomeWay from '@/components/transition/SomeWay.vue';
+import UsingGSAP from '@/components/transition/UsingGSAP.vue';
+import UsingAnimate from '@/components/transition/UsingAnimate.vue';
+import TransitionGroup from '@/components/transition/TransitionGroup.vue';
+import RandomNum from '@/components/transition/RandomNum.vue';
+import GSAPWatch from '@/components/transition/GSAPWatch.vue';
+import AsyncFat from '@/components/async_suspense/AsyncFat.vue';
 import RefImpl from '@/components/setup_ref/RefImpl.vue';
 
-import Page from '../components/transition/cross-component-animation/Page.vue';
-import Page1 from '../components/transition/cross-component-animation/Page1.vue';
-import Page2 from '../components/transition/cross-component-animation/Page2.vue';
+import Page from '@/components/transition/cross-component-animation/Page.vue';
+import Page1 from '@/components/transition/cross-component-animation/Page1.vue';
+import Page2 from '@/components/transition/cross-component-animation/Page2.vue';
 
 const routes = [
     {

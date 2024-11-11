@@ -19,7 +19,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
-    "baseUrl": ".",
+    "baseUrl": "./",
     // 映射的基路径
     "paths": {
       "@/*": [
@@ -28,6 +28,7 @@
     }
   },
   "include": [
-    "vite.config.ts"
+    "vite.config.ts",
+    "env.d.ts"
   ]
 }

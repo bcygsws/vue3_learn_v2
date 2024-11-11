@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, defineExpose } from 'vue';
+import { ref} from 'vue';
 const list = ref(['HTML', 'CSS', 'JavaScript']);
 const txt = ref('');
 const handleChange = () => {

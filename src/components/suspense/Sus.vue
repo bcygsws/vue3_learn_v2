@@ -18,8 +18,8 @@
     </Suspense>
     <!-- 使用axios请求数据，模拟异步组件的加载 -->
     <Suspense>
-      <template v-slot:default><UseAxios></UseAxios></template>
-      <template v-slot:fallback><h3>加载中……</h3></template>
+      <template #default><UseAxios></UseAxios></template>
+      <template #fallback><h3>加载中……</h3></template>
     </Suspense>
     <!-- 使用async await的方式 -->
     <Suspense>

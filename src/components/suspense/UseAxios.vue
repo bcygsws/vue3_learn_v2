@@ -9,7 +9,7 @@ import { defineComponent } from 'vue';
 import axios from 'axios';
 export default defineComponent({
   name: 'UseAxios',
-  setup() {
+  async setup() {
     return axios.get('/data/address.json').then((res) => {
       return {
         address: res.data.address

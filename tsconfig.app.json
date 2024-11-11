@@ -23,7 +23,8 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
-    "baseUrl": ".",// 映射的基路径
+    "baseUrl": "./",
+    // 映射的基路径
     "paths": {
       "@/*": [
         "src/*"
@@ -33,6 +34,7 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
-    "src/**/*.vue"
+    "src/**/*.vue",
+    "env.d.ts"
   ]
 }
