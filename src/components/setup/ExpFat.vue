@@ -27,6 +27,7 @@ import {
   reactive
 } from 'vue';
 import ExpSon from './ExpSon.vue';
+
 export default defineComponent({
   components: {
     ExpSon
@@ -56,16 +57,20 @@ export default defineComponent({
      * 2.2 且count挂载在当前RefImpl的value属性上，而且是一个代理对象（Proxy对象，打印mySon.value验证了它是一个Proxy）
      *
      */
-    // 使用watch监听count值的变化；onMounted钩子
-    // onMounted(() => {
-    //   count = ref(mySon.value.count);
-    // });
+        // 使用watch监听count值的变化；onMounted钩子
+        // onMounted(() => {
+        //   count = ref(mySon.value.count);
+        // });
 
-    // 数据ct的格式为：{"count",1} ct.count会报错
+        // 数据ct的格式为：{"count",1} ct.count会报错
+        // 注：mySon是子组件ExpSon的ref对象，子组件中通过expose暴露了count对象和toDo方法
     const ct = computed(() => {
-      console.log('计算属性执行了');
-      return mySon.value; // mySon.value.count在计算属性中也会报错
-    });
+          console.log('计算属性执行了');
+          return mySon.value; // mySon.value.count在计算属性中也会报错
+        });
+
+    // 注：谁的数据谁维护原则，子组件中的count值，子组件中的toDo()方法，在父组件都是子组件的实例自己维护，所以expose暴露的count,在父组件中
+    // 使用子组件实例修改时，子组件中的count值也会跟随变化
     const changeCount = () => {
       console.log(mySon.value); // 点击按钮时，mounted阶段已经执行，mySon.value才由undefined变成对象，而且是一个Proxy代理对象
       mySon.value.count += 1;
@@ -73,7 +78,7 @@ export default defineComponent({
       // 子组件中的方法toDo调用了
       mySon.value.toDo(); // 子组件ExpSon中方法toDo
     };
-    return { mySon, changeCount, ct };
+    return {mySon, changeCount, ct};
   }
 });
 </script>

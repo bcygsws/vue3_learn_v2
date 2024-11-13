@@ -10,14 +10,14 @@
         placeholder="请输入姓氏"
         id="name"
         v-model="firstName"
-      /><br />
+    /><br/>
       名字：<input
         type="text"
         name="intr"
         placeholder="请输入名字"
         id="intr"
         v-model="lastName"
-      /><br />
+    /><br/>
     </fieldset>
     <fieldset>
       <legend>计算属性和监视的演示：</legend>
@@ -30,28 +30,28 @@
         type="text"
         placeholder="显示姓名"
         v-model="fullName2"
-      /><br />
+    /><br/>
       fullName3显示姓名：<input
         type="text"
         placeholder="显示姓名"
         v-model="fullName3"
-      /><br />
+    /><br/>
       fullName4显示姓名：<input
         type="text"
         placeholder="显示姓名"
         v-model="fullName4"
-      /><br />
+    /><br/>
       fullName5显示姓名：<input
         type="text"
         placeholder="显示姓名"
         v-model="fullName5"
-      /><br />
+    /><br/>
       <div v-for="(item, index) in pwd.pwdArr" :key="index">
         <span>密码{{ index + 1 }}:</span>
-        <input type="text" v-model="item.password" /><br />
+        <input type="text" v-model="item.password"/><br/>
       </div>
       <!-- disabled="true"或者disabled="false"按钮都被禁用了，disabled失效了；尝试用js的方式控制按钮的使用或禁用 :disable="isReset"-->
-      <input type="button" value="重置" :disabled="pwd.isReset" /><br />
+      <input type="button" value="重置" :disabled="pwd.isReset"/><br/>
     </fieldset>
   </form>
 </template>
@@ -65,6 +65,7 @@ import {
   toRefs,
   defineComponent
 } from 'vue';
+
 /**
  * @desc:总结
  * vue中watch(watchEffect)和computed的比较：
@@ -120,6 +121,7 @@ export default defineComponent({
     console.log(user.firstName);
     console.log(user.lastName);
     // 演示监听多个数据
+    // 双向绑定存储密码框中数据的数组
     const pwd = reactive({
       pwdArr: [
         {
@@ -138,6 +140,7 @@ export default defineComponent({
       passVals: computed(() => getArr())
     });
     const getArr = (): string[] => {
+      // map转换功能：myArr['密码1','密码2']
       let myArr = pwd.pwdArr.map((item) => {
         return item.password;
       });
@@ -146,6 +149,7 @@ export default defineComponent({
     };
     /**
      *
+     * @desc:watch监听数组数据源passVals是reactive对象pwd的某个属性；watch监听时，要写成函数的形式()=>pwd.passVals
      * watch监听密码框数组passVals
      * 1.pwd.passVals是计算属性computed得到的，它返回的是ComputedImplRef；不是ref定义的ImplRef；所以watch监听多个数据时，使用了
      * 函数形式：()=>pwd.passVals
@@ -155,15 +159,16 @@ export default defineComponent({
      *
      */
     watch(
-      () => pwd.passVals,
-      ([newVal1, newVal2]) => {
-        if (newVal1 !== '' && newVal2 !== '') {
-          pwd.isReset = false;
-        } else {
-          pwd.isReset = true;
-        }
-      },
-      { immediate: true, deep: true }
+        () => pwd.passVals,
+        ([newVal1, newVal2]) => {
+          // 两个密码框中的密码都不为空时，重置按钮才是可用的
+          if (newVal1 !== '' && newVal2 !== '') {
+            pwd.isReset = false;//
+          } else {
+            pwd.isReset = true;// 按钮禁止生效了
+          }
+        },
+        {immediate: true, deep: true}
     );
 
     // 只有getter的计算属性,一个回调；如果是getter+setter的计算属性，回调函数被{get(){},set(){}}取代
@@ -285,12 +290,12 @@ export default defineComponent({
      *
      *
      */
-    // 收集要监视的对象，一对多，fullName4是引起变化的数据，firstName和lastName是监听数据
-    // watchEffect(() => {
-    //   let arr = fullName4.value.split("-");
-    //   user.firstName = arr[0];
-    //   user.lastName = arr[1];
-    // });
+        // 收集要监视的对象，一对多，fullName4是引起变化的数据，firstName和lastName是监听数据
+        // watchEffect(() => {
+        //   let arr = fullName4.value.split("-");
+        //   user.firstName = arr[0];
+        //   user.lastName = arr[1];
+        // });
     let fullName5 = ref('');
     // watch方式三、监听多个数据
     watch([fullName5, () => user.firstName, () => user.lastName], (val) => {
@@ -313,7 +318,7 @@ export default defineComponent({
     // user用toRefs解构出来，模板中引用更简单。模板中user.firstName和user.lastName都可以
     // 使用firstName和lastName直接引用
 
-    let { firstName, lastName } = toRefs(user);
+    let {firstName, lastName} = toRefs(user);
     return {
       // fullName1,
       fullName2,

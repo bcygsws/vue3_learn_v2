@@ -5,7 +5,7 @@
   <p>m3:{{ m3 }}</p>
   <button @click="handle">点击按钮，观察m1、m2、m3的变化</button>
 </template>
-<script lang="ts">
+<script lang="ts" setup>
 /**
  *
  * @ ref和reactive的一些细节
@@ -22,43 +22,34 @@
  * 拦截的属性的操作
  * 6.ref在setup中处理时，const user=ref('dfaggfa');要添加一个value(user.value才能拿到值)，才能拿到值；
  * 在模板中处理它时，系统会自动加value,不用带value；原因是：vue3内部会进行自动浅层解包，所以ref定义的数据，模板中不带value
- *
- *
  */
-import { defineComponent, ref, reactive } from 'vue';
-export default defineComponent({
-  name: 'Detail',
-  setup() {
-    const m1 = ref('你好啊');
-    const m2 = reactive({
-      name: '张明明',
-      age: 25,
-      wife: {
-        name: '李红',
-        age: 22,
-        info: '未解忆长安'
-      }
-    });
-    const m3 = ref({
-      name: '张明明',
-      age: 25,
-      wife: {
-        name: '李红',
-        age: 22,
-        info: '未解忆长安'
-      }
-    });
-    const handle = () => {
-      m1.value += '~';
-      m2.wife.info += '**';
-      m3.value.wife.info += '&&';
-    };
-    return {
-      m1,
-      m2,
-      m3,
-      handle
-    };
+import {ref, reactive} from 'vue';
+
+defineOptions({
+  name: 'Detail'
+})
+const m1 = ref('你好啊');
+const m2 = reactive({
+  name: '张明明',
+  age: 25,
+  wife: {
+    name: '李红',
+    age: 22,
+    info: '未解忆长安'
   }
 });
+const m3 = ref({
+  name: '张明明',
+  age: 25,
+  wife: {
+    name: '李红',
+    age: 22,
+    info: '未解忆长安'
+  }
+});
+const handle = () => {
+  m1.value += '~';
+  m2.wife.info += '**';
+  m3.value.wife.info += '&&';
+}
 </script>

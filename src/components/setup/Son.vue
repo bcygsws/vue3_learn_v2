@@ -71,10 +71,10 @@ export default defineComponent({
   name: 'Son',
   data() {
     return {
-      count: 10
+      count: 10,
       // 同名时，setup中的属性优先，data中的info会被setup中info取代
       // error  Duplicated key 'info'
-      // info: '曾经沧海难为水'
+      info: '曾经沧海难为水'
     };
   },
   methods: {

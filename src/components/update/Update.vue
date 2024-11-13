@@ -8,7 +8,7 @@
   <button @click="updatePage">更新数据和页面</button>
 </template>
 <script lang="ts">
-import { defineComponent, reactive } from 'vue';
+import {defineComponent, reactive, ref} from 'vue';
 // 引入代理对象的接口
 import IObj from '../../types/person';
 // 代理数据影响界面更新
@@ -28,12 +28,12 @@ import IObj from '../../types/person';
  *
  * 二、vue3学习文档
  * 参考:https://blog.csdn.net/qq_44999663/article/details/128145045
- * 2.1 在vue2中，使用defineProperty()拦截对象的属性操作，包括属性的读写、属性的添加或删除等；
+ * 2.1 对象：在vue2中，使用defineProperty()拦截对象的属性操作，包括属性的读写、属性的添加或删除等；
  * 缺陷：defineProperty处理对象有个缺陷，属性的添加或删除，页面不会更新；
- * 2.2 同样在vue2，通过重写数组的元素操作的所有方法，来拦截数组元素的操作
+ * 2.2 数组：同样在vue2，通过重写数组的元素操作的所有方法，来拦截数组元素的操作
  * 缺陷：通过下标改变元素值，和改变数组的长度，页面不会更新
  *
- * 辅助解决：Vue.set the.$set() / Vue.delete this.$delete()
+ * 辅助解决：Vue.set this.$set() / Vue.delete this.$delete()
  *
  * 2.3 在vue3中，这个问题就不存在了。可以直接操作被代理对象，页面会自动更新
  * 添加属性：user.gender="男";
@@ -41,7 +41,7 @@ import IObj from '../../types/person';
  * 页面会自动更新
  *
  * Vue3响应式的原理是：两个对象Proxy和Reflect
- * Proxy：拦截date对象的任意属性的任意操作（多达13种操作），属性的读写、属性的添加和删除等
+ * Proxy：拦截date对象的任意属性的任意操作（多达13种操作），比如：属性的读写、属性的添加和删除等
  * Reflect：动态地对被代理对象（reactive(obj)之后的对象）的属性进行特定的操作
  *
  */
@@ -62,6 +62,7 @@ export default defineComponent({
     };
     // 定义一个代理对象user,目标对象是obj
     let user: IObj = reactive(obj);
+    let user1: IObj = ref(obj);
     console.log(user);
     // 注意：Vue3中事件处理函数（类似vue2中的methods中的方法），要写成箭头函数的形式
     const updatePage = () => {
@@ -74,11 +75,20 @@ export default defineComponent({
       // 首先user.gender上也报错，提示类型不匹配的问题，为reactive添加泛型reactive<any>(obj)，这个
       // 报错bug解决；然后，点击按钮，查看性别处，由【空值】变成了【男】，页面更新了，而且打印的代理对象
       // 中user也增加了gender这个键值对，obj目标对象上也有gender这个属性了
-      // user.gender = '男';
-      delete user.age; // age的值没了，目标对象中也没有age属性了，页面更新了
+      user.gender = '男';
+      // delete user.age; // age的值没了，目标对象中也没有age属性了，页面更新了
       console.log(user);
+
+      // 方式三：使用ref({})时，实例的.value属性，是一个代理对象，所以和直接操作reactive深度响应式对象是一样的
+      // 结果：属性添加和删除，对象里数据修改，且界面会更新
+      // user1.value.gender = '男';
+      // delete user1.value.age;
+      // console.log(user1);
     };
-    return { user, updatePage };
+    return {
+      user,
+      updatePage
+    };
   }
 });
 </script>
