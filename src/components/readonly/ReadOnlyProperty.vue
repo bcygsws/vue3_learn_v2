@@ -39,12 +39,12 @@ export default defineComponent({
       // 注释放开，提示：name是user对象自身的property,是只读的，不能更改
       // user2.name += "==";
       // 浅只读,外层属性只读；不对嵌套对象的深度进行只读转换，换言之；在shallowReadonly中，嵌套的深度是可读可写的
-      // user2.cars.red += "666";
+      user2.cars.red += "666";
       // 3.特别注意：浅只读的时候，red属性用接口声明为可选的，才可以删除
       // The operand of a 'delete' operator must be optional.
       // 且在Vue3中，delete删除属性，不必使用$set语句来辅助更新界面；delete语句后，会自动更新界面
-      delete user2.cars.red;
-      // console.log(user2); // Proxy{}
+      // delete user2.cars.red;
+      console.log(user2); // Proxy{}
     }
     return {
       user1,
@@ -54,6 +54,13 @@ export default defineComponent({
   }
 });
 /**
+ *
+ * @desc:readonly 和 shallowReadonly
+ * 只读和浅只读的使用场景：
+ *
+ * 注意：浅只读和只读，都是在reactive对象上，使用的
+ *    readonly(reactive({}))
+ *    shallowReadonly(reactive({}))
  *
  * readonly：深只读
  *  返回一个对象（响应式或纯对象）或ref,并返回原始代理的只读代理

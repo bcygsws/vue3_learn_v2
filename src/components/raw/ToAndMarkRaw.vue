@@ -5,9 +5,9 @@
   <button @click="handleToRaw">toRaw,数据变化，页面不更新</button>
   <!-- markRaw的使用 -->
   <p>{{ state }}</p>
-  <button @click="handleMarkRaw">markRaw,数据不能更改</button>
+  <button @click="handleMarkRaw">reactive深度响应式对象的属性，markRaw后数据不能更改</button>
   <p>{{ raw1 }}</p>
-  <button @click="handleMR">markRaw</button>
+  <button @click="handleMR">普通对象markRaw</button>
   <p>{{ person1 }}</p>
   <button @click="handleObj">普通对象改变值</button>
 </template>
@@ -18,7 +18,9 @@ interface IUser {
   cars: { red: string };
   likes?: string[];
 }
-import { defineComponent, reactive, toRaw, markRaw } from 'vue';
+
+import {defineComponent, reactive, toRaw, markRaw} from 'vue';
+
 /**
  *
  * 1.toRaw 是一个还原方法，可以用于临时读取，但是对象不被代理/跟踪，数据可以改变，页面不能更新
@@ -59,16 +61,16 @@ export default defineComponent({
       // state.likes = markRaw(likes); // error: Property 'likes' does not exist on type '{ name: string; age: number; cars: { red: string; }; }'.
       // 就执行了这一次的改变，在点击按钮，就不会改变了
       const likes = ['吃', '喝', '玩', '乐'];
-      console.log(state);
+      console.log("first", state);
       // 情形a.此时likes还是响应式的
       // state.likes = likes;
 
-      // 情形b.此时likes不是响应式的
+      // 情形b.此时reactive深度响应式对象的likes节点就不是响应式的
       state.likes = markRaw(likes);
       const arr = state.likes;
       window.setTimeout(() => {
         arr[0] += '***';
-        console.log(state);
+        console.log("second", state);
         console.log('reactive响应式对象添加属性，看是否执行了？');
       }, 1000);
       // 这行likes[0]=likes[0]+"***";点击无数次按钮后，state.likes[0]="吃***"，最外层和深层次的所有属性值，都不会再改变了。
@@ -76,32 +78,32 @@ export default defineComponent({
     };
     /**
      *
-     * 对于普通对象，没有ref或者reactive包裹的普通对象
-     * markRaw包裹它没有意义，对象的属性值都能改变
-     * 只有对于情形一的情况：为添加的属性likes（本来是响应式的），markRaw(likes)属性后，数据只改变一次，而后再也不会改变了
-     *
-     *
+     * @desc:reactive对象和普通对象使用markRaw的区别：
+     * a.对于普通对象，没有ref或者reactive包裹的普通对象: markRaw包裹它没有意义，对象的属性值都能改变
+     * b.只有对于情形一的情况(reactive深度响应式对象的某个属性)：为添加的属性likes（本来是响应式的），
+     * markRaw(likes)属性后，数据只改变一次，而后再也不会改变了
      */
-    // 情形二、普通对象编辑为markRaw属性和深度的属性值都能改变，但是不会触发页面更新
+        // 情形二、普通对象编辑为markRaw属性和深度的属性值都能改变，但是不会触发页面更新
     const person = {
-      name: '张衡',
-      age: 18,
-      cars: ['北京', '上海', '南京']
-    };
+          name: '张衡',
+          age: 18,
+          cars: ['北京', '上海', '南京']
+        };
     const raw1 = markRaw(person);
     const handleMR = () => {
       // raw1.name += '==';// name属性值改变，但是界面不会更新
       raw1.cars[0] += '==';
       console.log(raw1); // 同样，深度属性的值也能够改变，但是界面不会更新
     };
-    // 对比:普通对象，能改变值，但无法触发界面更新
+    // 对比:已经熟知的情况：普通对象能改变值，但无法触发界面更新
+    // 这是在vue3中，要使用ref和reactive定义数据对象的原因
     const person1 = {
       name: '张衡',
       age: 18,
       cars: ['北京', '上海', '南京']
     };
     const handleObj = () => {
-      person1.cars[0] += '==';
+      person1.cars[0] += '***';
       console.log(person1);
     };
     return {

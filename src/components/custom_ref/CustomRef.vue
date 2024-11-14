@@ -1,13 +1,12 @@
 <template>
   <h3>十三、演示customRef的使用</h3>
-  <input type="text" name="" id="" v-model="keywords" />
+  <input type="text" name="" id="" v-model="keywords"/>
   <p>{{ keywords }}</p>
 </template>
-<script lang="ts">
+<script lang="ts" setup>
 /**
  *
- * @ customRef
- *
+ * @desc: customRef的用法
  * 作用：创建一个自定义Ref,并对其依赖项【跟踪】和【界面触发】进行显式控制
  *
  * 语法：
@@ -47,7 +46,7 @@
  * 3.2 JavaScript的垃圾回收机制：
  * 如果一个变量对象不被引用，它就会被回收
  * 如果两个对象相互引用，没有第三方对象引用它们，这两个对象会被回收
- * 函数a被b引用，函数b又被a外的c引用，那么函数a执行后，不会被回收的原因
+ * 函数a被b引用，函数b又被a外的c引用，那么函数a执行后，不会被回收
  *
  * 3.3 闭包的特点
  * 可以读取自身函数外部的变量（沿着作用域链寻找），先查找函数内部是否有定义，如果没有再想函数外部寻找（选择离调用处最近的那个变量来使用）
@@ -70,24 +69,18 @@
  * https://blog.csdn.net/weixin_45522097/article/details/126715122
  *
  */
-// import { defineComponent, ref, customRef } from 'vue';
-import { defineComponent } from 'vue';
+// import { ref, customRef } from 'vue';
 // import useBounceRef from "./useBounceRef.ts";// 错误的方式
 import useBounceRef from './useBounceRef'; // 正确的方式，系统内部解析成了useBounceRef.js文件，省略后缀，自动依引入.js
 // 自定义hook
 // 传入的值除了字符串类型，可能是number数字；使用泛型来约束
 // 抽离出去，封装成useBounceRef.ts
+defineOptions({
+  name: 'CustomRef'
+})
 
-export default defineComponent({
-  name: 'CustomRef',
-  setup() {
-    // 1.正常情况下的跟踪
-    // const keywords = ref('abc');
-    // 2.使用customRef显式控制
-    const keywords = useBounceRef<string>('abc', 1500);
-    return {
-      keywords
-    };
-  }
-});
+// 1.正常情况下的跟踪
+// const keywords = ref('abc');
+// 2.使用customRef显式控制
+const keywords = useBounceRef<string>('abc', 1500);
 </script>
