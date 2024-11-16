@@ -14,7 +14,7 @@ import { defineComponent, reactive, toRef, ref } from 'vue';
 import Son from './Son.vue';
 /**
  *
- * 区别：
+ * @desc:toRef(state,money)和ref(state.money)的区别：
  * toRef:为源响应式对象上的某个属性创建了一个ref对象，二者同步操作的是同一数值，同步更新
  * 语法：const age=toRef(state,'age');和解构toRefs(state)拿到age是一个意思
  *
@@ -35,7 +35,8 @@ export default defineComponent({
     // 使用toRef拿到age属性，返回一个ref
     const age = toRef(state, 'age');
     console.log(age); // ObjectRefImpl
-    // 把响应式数据对象中某个属性用ref包装
+    // 注意：把响应式数据对象中某个属性用ref包装,根据state.money的初始值，创建了一个全新的ref，
+    // state.money模版中的数据就不会再改变了
     const money = ref(state.money);
     console.log(money);// RefImpl
     const update = () => {

@@ -7,7 +7,6 @@
 import {
   defineComponent,
   ref,
-  reactive,
   onBeforeMount,
   onMounted,
   onBeforeUpdate,

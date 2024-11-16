@@ -1,7 +1,4 @@
 <template>
-  <!-- 不使用toRefs版本 -->
-  <!-- <p>姓名：{{ info.name }}</p>
-  <p>年龄：{{ info.age }}</p> -->
   <!-- 使用toRefs的版本 -->
   <p>姓名：{{ name }}</p>
   <p>年龄：{{ age }}</p>

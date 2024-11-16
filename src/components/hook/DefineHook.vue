@@ -6,9 +6,9 @@
   <!-- errorMsg只要不是空字符串就是true -->
   <p v-else-if="errorMsg">{{ errorMsg }}</p>
   <ul v-else>
-    <li>姓名：{{ data.name }}</li>
-    <li>地址：{{ data.address }}</li>
-    <li>距离：{{ data.distance }}</li>
+    <li>姓名：{{ data?.name }}</li>
+    <li>地址：{{ data?.address }}</li>
+    <li>距离：{{ data?.distance }}</li>
   </ul>
   <ul v-for="item in data1" :key="item.id">
     <li>id:{{ item.id }}</li>
@@ -19,7 +19,7 @@
 <script lang="ts">
 /**
  *
- * @ vue3中的自定义钩子，类似vue2中的混入技术
+ * @desc:vue3中的自定义钩子，类似vue2中的混入技术
  * vue2中混入技术：用途是分发复用代码，提高了代码的灵活性
  * 概念：组件实例mixins属性接收一个混入对象的实例，mixins:['混入对象mixin'],混入对象的属性和方法会被合并到组件中
  *
@@ -85,14 +85,14 @@ export default defineComponent({
      *
      */
     const { loading, data, errorMsg } =
-      urlRequests<IAddress>('data/address.json');
+      urlRequests<IAddress>('/data/address.json');
     // data和data1的类型和泛型的类型一致，data是T,data1是T[]
     // 为了和上面的区别，为products解构出的变量起别名，loading:loading1,data:data1,errorMsg:errorMsg1
     // 总结：
     // 1. 解构中起别名，像键值一样，从起别名之后，data1就代替解构的键data了
     // 2. 如果某个函数或接口或类被限定为泛型T了，实现时，变成T[]，代码也是可以成立的；比如：定义的泛型是urlRequests<T>
     // 在此处调用时，声明的是urlRequests<IProducts[]>
-    const { data: data1 } = urlRequests<IProducts[]>('data/products.json');
+    const { data: data1 } = urlRequests<IProducts[]>('/data/products.json');
     // 问题来了，如果我要监视data1的长度怎么办？
     // 代码写完后，报错：原因是泛型IProducts不一定有length属性的
     // watch(data1, () => {

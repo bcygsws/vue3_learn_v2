@@ -11,6 +11,8 @@
  * });来实现基本类型数据响应式的定义
  * ref的另外一个作用，获取标签元素对象(原生对象)
  * vue2 ref this.$refs
+ * vue3 const myRef=ref() + 标签上绑定ref属性ref="myRef"
+ *
  * react 16.3 以下，ref this.refs
  * react 16.3以上，myRef=React.createRef();
  * this.myRef.current 拿到标签元素对象
