@@ -1,5 +1,4 @@
 <template>
-  <modal-button></modal-button>
   <div id="nav">
     <router-link to="/">Home</router-link>
     |
@@ -8,8 +7,7 @@
   <router-view/>
 </template>
 <script lang="ts" setup>
-// 导入ModalButton组件
-import ModalButton from './components/teleport/ModalButton.vue';
+
 
 defineOptions({
   name: 'App'

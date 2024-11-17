@@ -6,13 +6,14 @@
   <button @click="reduceTwo(2)">-2</button>
 </template>
 <script lang="ts" setup>
-import { useStore } from 'vuex';
+import {useStore} from 'vuex';
+
 const store = useStore();
-const addTwo = (step) => {
+const addTwo = (step: number) => {
   // 通过mutations中的方法直接更改数据
-  store.commit('inc', { step: step });
+  store.commit('inc', {step: step});
 };
-const reduceTwo = (step) => {
-  store.dispatch('decAction', { step: step });
+const reduceTwo = (step: number) => {
+  store.dispatch('decAction', {step: step});
 };
 </script>

@@ -11,13 +11,13 @@
     >七、在不丢失reactive对象的响应式基础上，分解对象，对象每个属性都是一个ref
     </router-link
     >
+    <!--八、新组件之瞬移组件-->
+    <router-link to="/about/teleport">十五、使用新组件之瞬移组件teleport</router-link>
     <router-view></router-view>
   </div>
 </template>
-<script lang="ts">
-import {defineComponent, ref} from 'vue';
-
-export default defineComponent({
+<script lang="ts" setup>
+defineOptions({
   name: 'About'
-});
+})
 </script>

@@ -31,22 +31,22 @@ export default createStore({
         }
     },
     mutations: {
-        inc(state: IState, props) {
+        inc(state: IState, props: any) {
             state.count += props.step;
         },
-        dec(state: IState, props) {
+        dec(state: IState, props: any) {
             state.count -= props.step;
         },
-        remendName(state: IState, props) {
+        remendName(state: IState, props: any) {
             state.name = props;
         }
     },
     actions: {
-        decAction(context, props) {
+        decAction(context: any, props: any) {
             context.commit('dec', props);
         },
         // 改名的Actions方法
-        setName(context, props) {
+        setName(context: any, props: any) {
             context.commit('remendName', props);
         }
     },

@@ -10,8 +10,12 @@
   渲染的强度，做出合理的选择 -->
     <div class="modal" v-if="openDia">
       <div class="box">
-        <p>这是一个对话框</p>
-        <button @click="openDia = false">关闭对话框</button>
+        <p>编辑</p>
+        <!--直接在按钮事件处理函数上书写js代码，可以规避状态量openDia的状态维护问题-->
+        <div>这是一个对话框</div>
+        <div class="btn-box">
+          <button @click="openDia = false">关闭</button>
+        </div>
       </div>
     </div>
   </Teleport>
@@ -22,7 +26,8 @@
  * @ 注意：如果Teleport 瞬移标签中to="body",
  * 该组件ModalButton要成为App的子组件时，按钮开始位于App的第一行，便于观察效果
  */
-import { defineComponent, ref } from 'vue';
+import {defineComponent, ref} from 'vue';
+
 export default defineComponent({
   name: 'ModalButton',
   setup() {
@@ -33,7 +38,7 @@ export default defineComponent({
   }
 });
 </script>
-<style  lang="scss" scoped>
+<style lang="scss" scoped>
 /* 注意：这种带灰色背景的html结构的书写方式*/
 .modal {
   position: absolute;
@@ -46,6 +51,7 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.7);
+
   .box {
     /*注意：flex布局中属性不用加单引号，多加了单引号，看不到效果  */
     display: flex;
@@ -56,6 +62,20 @@ export default defineComponent({
     /* 注意：当flex-direction设置为column时，y为主轴，当我们只要求它在水平方向居中时，x就是交叉轴；交叉轴的居中问题使用
     align-items:center; */
     align-items: center;
+    padding: 10px;
+
+    > p {
+      width: 100%;
+    }
+
+    .btn-box {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: flex-end;
+    }
   }
 }
 </style>

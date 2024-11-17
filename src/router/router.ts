@@ -41,6 +41,7 @@ import RefImpl from '@/components/setup_ref/RefImpl.vue';
 import Page from '@/components/transition/cross-component-animation/Page.vue';
 import Page1 from '@/components/transition/cross-component-animation/Page1.vue';
 import Page2 from '@/components/transition/cross-component-animation/Page2.vue';
+import ModalButton from "@/components/teleport/ModalButton.vue";
 
 const routes = [
     {
@@ -183,16 +184,20 @@ const routes = [
             import(/* webpackChunkName: "about" */ '../views/About.vue'),
         children: [
             {
-                path: '/about/hook',
+                path: 'hook',
                 component: DefineHook
             },
             {
-                path: '/about/fat_life',
+                path: 'fat_life',
                 component: FatLife
             },
             {
-                path: '/about/to_refs',
+                path: 'to_refs',
                 component: Base
+            },
+            {
+                path: 'teleport',
+                component: ModalButton
             }
         ]
     }
