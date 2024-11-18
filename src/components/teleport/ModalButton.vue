@@ -12,7 +12,7 @@
       <div class="box">
         <p>编辑</p>
         <!--直接在按钮事件处理函数上书写js代码，可以规避状态量openDia的状态维护问题-->
-        <div>这是一个对话框</div>
+        <div class="content">这是一个对话框</div>
         <div class="btn-box">
           <button @click="openDia = false">关闭</button>
         </div>
@@ -20,23 +20,19 @@
     </div>
   </Teleport>
 </template>
-<script lang="ts">
+<script lang="ts" setup>
 /**
- *
- * @ 注意：如果Teleport 瞬移标签中to="body",
- * 该组件ModalButton要成为App的子组件时，按钮开始位于App的第一行，便于观察效果
+ * @desc:注意：如果Teleport 瞬移标签中to="body",
+ * 该组件ModalButton要成为App的子组件
+ * 这相当于用Teleport内置组件写了一个模态框
  */
-import {defineComponent, ref} from 'vue';
+import {ref} from 'vue';
 
-export default defineComponent({
-  name: 'ModalButton',
-  setup() {
-    const openDia = ref(false);
-    return {
-      openDia
-    };
-  }
+defineOptions({
+  name: 'ModalButton'
 });
+// 控制对话框的显示和隐藏
+const openDia = ref(false);
 </script>
 <style lang="scss" scoped>
 /* 注意：这种带灰色背景的html结构的书写方式*/
@@ -68,9 +64,17 @@ export default defineComponent({
       width: 100%;
     }
 
+    .content {
+      width: 100%;
+      height: 75%;
+      background-color: #cccccc;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
     .btn-box {
       width: 100%;
-      height: 100%;
+      flex: 1;
       display: flex;
       flex-direction: row;
       align-items: flex-end;
